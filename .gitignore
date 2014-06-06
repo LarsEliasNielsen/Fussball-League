@@ -1,0 +1,7 @@
+# Git ignore
+
+.DS_Store
+._.DS_Store
+.htaccess
+robots.txt
+pdo.php
