@@ -9,57 +9,81 @@ class Player {
 
   public $db;
 
-  private function __contruct() {
+  public function __construct() {
 
-    // Get PDO.
-    include('pdo.php');
-    // Establish database connetion.
-    $db = DB::getDatabase('fussball');
-
-    return $db;
+    // Constructor.
+    require_once('Core.php');
 
   }
 
-  public function getPlayers() {
+  /**
+   * Creating a new player.
+   *
+   * @param $player_name - Name of player as string.
+   */
+  public function createPlayer($player_name) {}
 
-    // Get PDO.
-    include('pdo.php');
-    // Establish database connetion.
-    $db = DB::getDatabase('fussball');
+  /**
+   * Update player information.
+   *
+   * @param $player_id - Player id from database.
+   */
+  public function updatePlayer($player_id) {}
+
+  /**
+   * Getting players from database as array.
+   *
+   * @return $players - Players as array.
+   */
+  private function getPlayers() {
 
     $players = array();
-
-    // Get players match score from database.
+    // Query for getting all players.
     $players_query = "SELECT
                         player_id,
                         name,
                         player_score,
                         modified
                         FROM player";
-    $statement = $db->prepare($players_query);
-    $statement->execute();
-    $players_rows = $statement->fetchAll();
 
-    foreach($players_rows as $row) {
+    try {
+      $core = Core::getInstance();
+      $statement = $core->dbh->prepare($players_query);
 
-      // Get the player id.
-      $player_id = intval($row['player_id']);
+      if ($statement->execute()) {
 
-      // Create player array.
-      $player = array(
-        'id' => $player_id,
-        'name' => $row['name'],
-        'score' => $row['player_score']
-      );
+        $players_rows = $statement->fetchAll();
+        // blablabla....
+        foreach($players_rows as $row) {
 
-      // Add player to array of players.
-      $players[$player_id] = $player;
+          // Get the player id.
+          $player_id = intval($row['player_id']);
+
+          // Create player array.
+          $player = array(
+            'id' => $player_id,
+            'name' => $row['name'],
+            'score' => $row['player_score']
+          );
+
+          // Add player to array of players.
+          $players[$player_id] = $player;
+        }
+      }
+    } catch (PDOException $pe) {
+      trigger_error('Could not connect to MySQL database. ' . $pe->getMessage() , E_USER_ERROR);
     }
 
     return $players;
 
   }
 
+  /**
+   * Getting players as options (select input).
+   *
+   * @param $players_array - Players as array from getPlayers().
+   * @return $player_options - Player options as string.
+   */
   public function getPlayersAsOptions($players_array) {
 
     $player_options = '';
