@@ -10,52 +10,49 @@
   $db = DB::getDatabase('fussball');
 
   // Get parameters.
-  $game_id = isset($_GET['id']) ? $_GET['id'] : 0;
+  $game_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
   // Get game data from database.
-  $game_query = "SELECT
-                      game_id,
-                      winner_team,
-                      timestamp
-                      FROM game WHERE game_id = :gameId";
+  $game_query = "SELECT game.game_id, game.winner_team, game.timestamp, player_game.player_id, player_game.team, player_game.game_id, player.name, player.player_score
+    FROM game
+    LEFT JOIN player_game
+    ON game.game_id = player_game.game_id
+    LEFT JOIN player
+    ON player_game.player_id = player.player_id
+    WHERE game.game_id = :gameId";
   $statement = $db->prepare($game_query);
   $statement->bindParam(':gameId', $game_id);
   $statement->execute();
-  $game_row = $statement->fetch();
+  $rows = $statement->fetchAll();
 
-  $game = array();
-
+  // Output structure.
   $game = array(
-    'fetched' => time(),
+    'fetched' => null,
     'game' => array(
-      'id' => intval($game_row['game_id']),
+      'id' => null,
       'team' => array(
         'red' => array(),
         'blue' => array(),
       ),
-      'winner_team' => $game_row['winner_team'],
-      'timestamp' => strtotime($game_row['timestamp']),
-    ),
+      'winner_team' => null,
+      'timestamp' => null
+    )
   );
 
-  // Get player data from database,
-  $player_game = "SELECT
-                      player,
-                      team
-                      FROM player_game WHERE game = :gameId";
-  $statement = $db->prepare($player_game);
-  $statement->bindParam(':gameId', $game_id);
-  $statement->execute();
-  $player_game_rows = $statement->fetchAll();
-
-  foreach($player_game_rows as $row) {
-    $team = $row['team'];
+  // Go through each joined row.
+  foreach($rows as $row) {
+    $game['fetched'] = time();
+    $game['game']['id'] = intval($row['game_id']);
+    $game['game']['winner_team'] = $row['winner_team'];
+    $game['game']['timestamp'] = strtotime($row['timestamp']);
 
     $player = array(
-      'id' => intval($row['player'])
+      'id' => intval($row['player_id']),
+      'name' => $row['name'],
+      'score' => intval($row['player_score'])
     );
 
-    if ($team == 'red') {
+    if ($row['team'] == 'red') {
       array_push($game['game']['team']['red'], $player);
     } else {
       array_push($game['game']['team']['blue'], $player);
