@@ -21,7 +21,25 @@ class Player {
    *
    * @param $player_name - Name of player as string.
    */
-  public function createPlayer($player_name) {}
+  public function createPlayer($player_name) {
+
+    $new_player_query = "INSERT INTO player (name, modified) VALUES (:playerName, CURRENT_TIMESTAMP)";
+
+    try {
+      $core = Core::getInstance();
+      $statement = $core->dbh->prepare($new_player_query);
+      $statement->bindParam(':playerName', $player_name, PDO::PARAM_STR);
+
+      if ($statement->execute()) {
+
+        // echo '<div>New player [' . $player_name . '] was created.</div>';
+
+      }
+    } catch (PDOException $pe) {
+      trigger_error('Could not connect to MySQL database: ' . $pe->getMessage() , E_USER_ERROR);
+    }
+
+  }
 
   /**
    * Update player information.
@@ -35,7 +53,7 @@ class Player {
    *
    * @return $players - Players as array.
    */
-  private function getPlayers() {
+  public function getPlayers() {
 
     $players = array();
     // Query for getting all players.
@@ -71,7 +89,7 @@ class Player {
         }
       }
     } catch (PDOException $pe) {
-      trigger_error('Could not connect to MySQL database. ' . $pe->getMessage() , E_USER_ERROR);
+      trigger_error('Could not connect to MySQL database: ' . $pe->getMessage() , E_USER_ERROR);
     }
 
     return $players;
