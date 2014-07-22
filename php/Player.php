@@ -5,16 +5,11 @@
  * @author Lars Nielsen <lars@lndesign.dk>
  */
 
+require_once('Core.php');
+
 class Player {
 
   public $db;
-
-  public function __construct() {
-
-    // Constructor.
-    require_once('Core.php');
-
-  }
 
   /**
    * Creating a new player.

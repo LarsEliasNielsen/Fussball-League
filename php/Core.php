@@ -1,13 +1,13 @@
 <?php
 
+require_once('Config.php');
+
 class Core {
 
   public $dbh;
   private static $instance;
 
   private function __construct() {
-
-    require_once('Config.php');
 
     // Building data source name from config.
     $dsn = 'mysql:host=' . Config::read('db.host') .
