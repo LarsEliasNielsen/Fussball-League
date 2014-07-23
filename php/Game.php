@@ -38,7 +38,23 @@ class Game {
    *
    * @param $players - Array containing players, teams and player points.
    */
-  private function calculatePlayerPoints($players) {}
+  private function calculatePlayerPoints($players) {
+
+    $red_player_1 = $players['red'][1];
+    $red_player_2 = $players['red'][2];
+
+    $blue_player_1 = $players['blue'][1];
+    $blue_player_2 = $players['blue'][2];
+
+    $winner_team = $players['winner_team'];
+
+    $red_team_score = $red_player_1['score'] + $red_player_2['score'];
+    $blue_team_score = $blue_player_1['score'] + $blue_player_2['score'];
+
+    $red_team_performance_rating = 1 / (1 + 10 ($blue_team_score - $red_team_score) / 400);
+    $blue_team_performance_rating = 1 / (1 + 10 ($red_team_score - $blue_team_score) / 400);
+
+  }
 
 }
 
