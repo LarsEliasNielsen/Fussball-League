@@ -60,8 +60,8 @@ class Game {
     $red_team_average_score = $red_team_score / 2;
     $blue_team_average_score = $blue_team_score / 2;
     // Calculate team performance rating.
-    $red_team_performance_rating = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
-    $blue_team_performance_rating = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
+    $red_team_performance_rating = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
+    $blue_team_performance_rating = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
 
     echo '<p>red rating: ' . $red_team_performance_rating . ', blue rating: ' . $blue_team_performance_rating . '</p>';
     echo '<br />';
@@ -163,7 +163,7 @@ class Game {
    */
   private function calculatePerformanceRating($score_1, $score_2) {
 
-    $performance_rating = (1 / (1 + pow(10, ($score_2 - $score_1) / 400)));
+    $performance_rating = (1 / (1 + pow(10, ($score_1 - $score_2) / 400)));
 
     return $performance_rating;
 
