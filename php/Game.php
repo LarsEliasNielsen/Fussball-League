@@ -63,9 +63,6 @@ class Game {
     $red_team_performance_rating = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
     $blue_team_performance_rating = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
 
-    echo '<p>red rating: ' . $red_team_performance_rating . ', blue rating: ' . $blue_team_performance_rating . '</p>';
-    echo '<br />';
-
     // Write team performance rating to array.
     $players['red']['performance_rating'] = $red_team_performance_rating;
     $players['blue']['performance_rating'] = $blue_team_performance_rating;
@@ -110,10 +107,6 @@ class Game {
 
     }
 
-    echo '<p>red 1 rating: ' . $red_player_1_performance_rating . ', red 2 rating: ' . $red_player_2_performance_rating . '</p>';
-    echo '<p>blue 1 rating: ' . $blue_player_1_performance_rating . ', blue 2 rating: ' . $blue_player_2_performance_rating . '</p>';
-    echo '<br />';
-
     // Write players performance rating to array.
     $players['red']['1']['performance_rating'] = $red_player_1_performance_rating;
     $players['red']['2']['performance_rating'] = $red_player_2_performance_rating;
@@ -138,12 +131,11 @@ class Game {
         break;
     }
 
+    // Calculate team game scores.
     $red_score = 24 * ($red_win_status - $red_team_performance_rating);
     $blue_score = 24 * ($blue_win_status - $blue_team_performance_rating);
 
-    echo '<p>red score: ' . $red_score . ', blue score: ' . $blue_score . '</p>';
-    echo '<br />';
-
+    // Calculate player game score and new player score.
     $red_player_1_game_score = round($red_score * $red_player_1_performance_rating);
     $red_player_1_new_score = $red_player_1['score'] + $red_player_1_game_score;
     $red_player_2_game_score = round($red_score * $red_player_2_performance_rating);
@@ -153,10 +145,6 @@ class Game {
     $blue_player_1_new_score = $blue_player_1['score'] + $blue_player_1_game_score;
     $blue_player_2_game_score = round($blue_score * $blue_player_2_performance_rating);
     $blue_player_2_new_score = $blue_player_2['score'] + $blue_player_2_game_score;
-
-    echo '<p>red 1 score: ' . $red_player_1['score'] . ' => ' . $red_player_1_new_score . ' (' . $red_player_1_game_score . '), red 2 score: ' . $red_player_2['score'] . ' => ' . $red_player_2_new_score . ' (' . $red_player_2_game_score . ')</p>';
-    echo '<p>blue 1 score: ' . $blue_player_1['score'] . ' => ' . $blue_player_1_new_score . ' (' . $blue_player_1_game_score . '), blue 2 score: ' . $blue_player_2['score'] . ' => ' . $blue_player_2_new_score . ' (' . $blue_player_2_game_score . ')</p>';
-    echo '<br />';
 
     // Write actual team game score in array.
     // Unrounded team game score if found in $red_score and $blue_score.
@@ -175,8 +163,8 @@ class Game {
     $players['blue']['1']['new_score'] = $blue_player_1_new_score;
     $players['blue']['2']['new_score'] = $blue_player_2_new_score;
 
-    echo '<pre />';
-    print_r($players);
+    // Return array with calculations.
+    return $players;
 
   }
 
