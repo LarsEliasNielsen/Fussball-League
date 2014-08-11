@@ -165,6 +165,14 @@ class Game {
 
   }
 
+  public function calculateGameAsJSON($game_info) {
+
+    $json_game_info = json_encode(self::calculateGame($game_info));
+
+    return $json_game_info;
+
+  }
+
   /**
    * Calculate performance rating.
    * Calculates the performance rating for team/player with score 1 against 
