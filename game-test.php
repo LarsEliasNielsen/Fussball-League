@@ -31,6 +31,9 @@ $players = array(
 );
 
 $game = new Game();
-$game->calculatePlayerPoints($players);
+$calculated_players = $game->calculateGame($players);
+
+echo '<pre />';
+print_r($calculated_players);
 
 ?>

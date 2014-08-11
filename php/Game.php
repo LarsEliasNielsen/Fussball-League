@@ -40,7 +40,7 @@ class Game {
    *
    * @param $players - Array containing players, teams and player points.
    */
-  public function calculatePlayerPoints($players) {
+  public function calculateGame($players) {
 
     $red_player_1 = $players['red']['1'];
     $red_player_2 = $players['red']['2'];
@@ -52,9 +52,6 @@ class Game {
 
     $red_team_score = $red_player_1['score'] + $red_player_2['score'];
     $blue_team_score = $blue_player_1['score'] + $blue_player_2['score'];
-
-    echo '<p>red points: ' . $red_team_score . ', blue points: ' . $blue_team_score . '</p>';
-    echo '<br />';
 
     // Teams average score is used to calculate team performance rating.
     $red_team_average_score = $red_team_score / 2;
