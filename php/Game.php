@@ -68,41 +68,40 @@ class Game {
 
     // If red team wins, low red player get most points, and high blue player looses most points.
     // This means that high red player get less points, and that low blue player looses less points.
-    // TODO Clean this mess up.
     if ($winner_team == 'red') {
 
       if ($red_player_1['score'] > $red_player_2['score']) {
-        $red_player_1_performance_rating = (1 / (1 + pow(10, ($red_player_2['score'] - $red_player_1['score']) / 400)));
-        $red_player_2_performance_rating = (1 / (1 + pow(10, ($red_player_1['score'] - $red_player_2['score']) / 400)));
+        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
+        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
       } else {
-        $red_player_1_performance_rating = (1 / (1 + pow(10, ($red_player_1['score'] - $red_player_2['score']) / 400)));
-        $red_player_2_performance_rating = (1 / (1 + pow(10, ($red_player_2['score'] - $red_player_1['score']) / 400)));
+        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
+        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
       }
 
       if ($blue_player_1['score'] > $blue_player_2['score']) {
-        $blue_player_1_performance_rating = (1 / (1 + pow(10, ($blue_player_1['score'] - $blue_player_2['score']) / 400)));
-        $blue_player_2_performance_rating = (1 / (1 + pow(10, ($blue_player_2['score'] - $blue_player_1['score']) / 400)));
+        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
+        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
       } else {
-        $blue_player_1_performance_rating = (1 / (1 + pow(10, ($blue_player_2['score'] - $blue_player_1['score']) / 400)));
-        $blue_player_2_performance_rating = (1 / (1 + pow(10, ($blue_player_1['score'] - $blue_player_2['score']) / 400)));
+        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
+        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
       }
 
     } else {
 
       if ($red_player_1['score'] > $red_player_2['score']) {
-        $red_player_1_performance_rating = (1 / (1 + pow(10, ($red_player_1['score'] - $red_player_2['score']) / 400)));
-        $red_player_2_performance_rating = (1 / (1 + pow(10, ($red_player_2['score'] - $red_player_1['score']) / 400)));
+        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
+        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
       } else {
-        $red_player_1_performance_rating = (1 / (1 + pow(10, ($red_player_2['score'] - $red_player_1['score']) / 400)));
-        $red_player_2_performance_rating = (1 / (1 + pow(10, ($red_player_1['score'] - $red_player_2['score']) / 400)));
+        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
+        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
       }
 
       if ($blue_player_1['score'] > $blue_player_2['score']) {
-        $blue_player_1_performance_rating = (1 / (1 + pow(10, ($blue_player_2['score'] - $blue_player_1['score']) / 400)));
-        $blue_player_2_performance_rating = (1 / (1 + pow(10, ($blue_player_1['score'] - $blue_player_2['score']) / 400)));
+        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
+        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
       } else {
-        $blue_player_1_performance_rating = (1 / (1 + pow(10, ($blue_player_1['score'] - $blue_player_2['score']) / 400)));
-        $blue_player_2_performance_rating = (1 / (1 + pow(10, ($blue_player_2['score'] - $blue_player_1['score']) / 400)));
+        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
+        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
       }
 
     }
