@@ -4,10 +4,7 @@
   header('Content-Type: application/json');
   header('Cache-Control: no-cache');
 
-  // Get PDO.
-  include('php/pdo.php');
-  // Establish database connetion.
-  $db = DB::getDatabase('fussball');
+  require_once('php/Core.php');
 
   // Get parameters.
   $player_name = isset($_GET['name']) ? $_GET['name'] : '';
@@ -19,24 +16,34 @@
                       player_score,
                       modified
                       FROM player WHERE name = :playerName";
-  $statement = $db->prepare($player_query);
-  $statement->bindParam(':playerName', $player_name);
-  $statement->execute();
-  $player_row = $statement->fetch();
 
-  $player = array();
+  try {
+    $core = Core::getInstance();
+    $statement = $core->dbh->prepare($player_query);
+    $statement->bindParam(':playerName', $player_name, PDO::PARAM_STR);
 
-  $player = array(
-    'fetched' => time(),
-    'player' => array(
-      'id' => intval($player_row['player_id']),
-      'name' => $player_row['name'],
-      'match_score' => intval($player_row['player_score']),
-      'modified' => strtotime($player_row['modified']),
-    ),
-  );
+    if ($statement->execute()) {
 
-  // Print score.
-  echo json_encode($player);
+      $player_row = $statement->fetch(PDO::FETCH_ASSOC);
+
+      $player = array();
+
+      $player = array(
+        'fetched' => time(),
+        'player' => array(
+          'id' => intval($player_row['player_id']),
+          'name' => $player_row['name'],
+          'match_score' => intval($player_row['player_score']),
+          'modified' => strtotime($player_row['modified']),
+        ),
+      );
+
+      // Print score.
+      echo json_encode($player);
+
+    }
+  } catch (PDOException $pe) {
+    trigger_error('Could not connect to MySQL database: ' . $pe->getMessage() , E_USER_ERROR);
+  }
 
 ?>
