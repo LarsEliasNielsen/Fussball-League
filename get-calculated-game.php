@@ -8,30 +8,31 @@
 
   $game_info = array(
     'red' => array(
-      '1' => array(
+      'player_1' => array(
         'id' => 1,
         'name' => 'larn',
         'score' => 1500
       ),
-      '2' => array(
+      'player_2' => array(
         'id' => 2,
         'name' => 'klan',
         'score' => 1600
       ),
+      'win_state' => 1,
     ),
     'blue' => array(
-      '1' => array(
+      'player_1' => array(
         'id' => 3,
         'name' => 'kazi',
         'score' => 1580
       ),
-      '2' => array(
+      'player_2' => array(
         'id' => 4,
         'name' => 'jepf',
         'score' => 1600
       ),
-    ),
-    'winner_team' => 'red'
+      'win_state' => 0,
+    )
   );
 
   $game = new Game();

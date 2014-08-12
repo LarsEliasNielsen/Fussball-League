@@ -42,13 +42,13 @@ class Game {
    */
   public function calculateGame($game_info) {
 
-    $red_player_1 = $game_info['red']['1'];
-    $red_player_2 = $game_info['red']['2'];
+    $red_player_1 = $game_info['red']['player_1'];
+    $red_player_2 = $game_info['red']['player_2'];
 
-    $blue_player_1 = $game_info['blue']['1'];
-    $blue_player_2 = $game_info['blue']['2'];
+    $blue_player_1 = $game_info['blue']['player_1'];
+    $blue_player_2 = $game_info['blue']['player_2'];
 
-    $winner_team = $game_info['winner_team'];
+    // $winner_team = $game_info['winner_team'];
 
     $red_team_score = $red_player_1['score'] + $red_player_2['score'];
     $blue_team_score = $blue_player_1['score'] + $blue_player_2['score'];
@@ -56,6 +56,7 @@ class Game {
     // Teams average score is used to calculate team performance rating.
     $red_team_average_score = $red_team_score / 2;
     $blue_team_average_score = $blue_team_score / 2;
+
     // Calculate team performance rating.
     $red_team_performance_rating = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
     $blue_team_performance_rating = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
@@ -66,7 +67,7 @@ class Game {
 
     // If red team wins, low red player get most points, and high blue player looses most points.
     // This means that high red player get less points, and that low blue player looses less points.
-    if ($winner_team == 'red') {
+    if ($game_info['red']['win_state'] == 1) {
 
       if ($red_player_1['score'] > $red_player_2['score']) {
         $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
@@ -105,32 +106,14 @@ class Game {
     }
 
     // Write players performance rating to array.
-    $game_info['red']['1']['performance_rating'] = $red_player_1_performance_rating;
-    $game_info['red']['2']['performance_rating'] = $red_player_2_performance_rating;
-    $game_info['blue']['1']['performance_rating'] = $blue_player_1_performance_rating;
-    $game_info['blue']['2']['performance_rating'] = $blue_player_2_performance_rating;
-
-    // TODO Move this to seperate method.
-    $red_win_status = 0;
-    $blue_win_status = 0;
-    switch($winner_team) {
-      case 'red':
-        $red_win_status = 1;
-        $blue_win_status = 0;
-        break;
-      case 'blue':
-        $red_win_status = 0;
-        $blue_win_status = 1;
-        break;
-      default:
-        $red_win_status = 0;
-        $blue_win_status = 0;
-        break;
-    }
+    $game_info['red']['player_1']['performance_rating'] = $red_player_1_performance_rating;
+    $game_info['red']['player_2']['performance_rating'] = $red_player_2_performance_rating;
+    $game_info['blue']['player_1']['performance_rating'] = $blue_player_1_performance_rating;
+    $game_info['blue']['player_2']['performance_rating'] = $blue_player_2_performance_rating;
 
     // Calculate team game scores.
-    $red_score = 24 * ($red_win_status - $red_team_performance_rating);
-    $blue_score = 24 * ($blue_win_status - $blue_team_performance_rating);
+    $red_score = 24 * ($game_info['red']['win_state'] - $red_team_performance_rating);
+    $blue_score = 24 * ($game_info['blue']['win_state'] - $blue_team_performance_rating);
 
     // Calculate player game score and new player score.
     $red_player_1_game_score = round($red_score * $red_player_1_performance_rating);
@@ -149,16 +132,16 @@ class Game {
     $game_info['blue']['game_score'] = intval($blue_player_1_game_score + $blue_player_2_game_score);
 
     // Write players game score in array.
-    $game_info['red']['1']['game_score'] = intval($red_player_1_game_score);
-    $game_info['red']['2']['game_score'] = intval($red_player_2_game_score);
-    $game_info['blue']['1']['game_score'] = intval($blue_player_1_game_score);
-    $game_info['blue']['2']['game_score'] = intval($blue_player_2_game_score);
+    $game_info['red']['player_1']['game_score'] = intval($red_player_1_game_score);
+    $game_info['red']['player_2']['game_score'] = intval($red_player_2_game_score);
+    $game_info['blue']['player_1']['game_score'] = intval($blue_player_1_game_score);
+    $game_info['blue']['player_2']['game_score'] = intval($blue_player_2_game_score);
 
     // Write players new score in array.
-    $game_info['red']['1']['new_score'] = $red_player_1_new_score;
-    $game_info['red']['2']['new_score'] = $red_player_2_new_score;
-    $game_info['blue']['1']['new_score'] = $blue_player_1_new_score;
-    $game_info['blue']['2']['new_score'] = $blue_player_2_new_score;
+    $game_info['red']['player_1']['new_score'] = $red_player_1_new_score;
+    $game_info['red']['player_2']['new_score'] = $red_player_2_new_score;
+    $game_info['blue']['player_1']['new_score'] = $blue_player_1_new_score;
+    $game_info['blue']['player_2']['new_score'] = $blue_player_2_new_score;
 
     // Return array with calculations.
     return $game_info;
