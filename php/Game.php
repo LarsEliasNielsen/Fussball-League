@@ -58,90 +58,97 @@ class Game {
     $blue_team_average_score = $blue_team_score / 2;
 
     // Calculate team performance rating.
-    $red_team_performance_rating = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
-    $blue_team_performance_rating = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
+    $red_team_performance_rating_win = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
+    $red_team_performance_rating_lose = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
+    $blue_team_performance_rating_win = self::calculatePerformanceRating($red_team_average_score, $blue_team_average_score);
+    $blue_team_performance_rating_lose = self::calculatePerformanceRating($blue_team_average_score, $red_team_average_score);
 
     // Write team performance rating to array.
-    $game_info['red']['performance_rating'] = $red_team_performance_rating;
-    $game_info['blue']['performance_rating'] = $blue_team_performance_rating;
+    $game_info['red']['performance_rating_win'] = $red_team_performance_rating_win;
+    $game_info['red']['performance_rating_lose'] = $red_team_performance_rating_lose;
+    $game_info['blue']['performance_rating_win'] = $blue_team_performance_rating_win;
+    $game_info['blue']['performance_rating_lose'] = $blue_team_performance_rating_lose;
 
-    // If red team wins, low red player get most points, and high blue player looses most points.
-    // This means that high red player get less points, and that low blue player looses less points.
-    if ($game_info['red']['win_state'] == 1) {
-
-      if ($red_player_1['score'] > $red_player_2['score']) {
-        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
-        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
-      } else {
-        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
-        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
-      }
-
-      if ($blue_player_1['score'] > $blue_player_2['score']) {
-        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
-        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
-      } else {
-        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
-        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
-      }
-
+    // Red team.
+    if ($red_player_1['score'] > $red_player_2['score']) {
+      // Win.
+      $red_player_1_performance_rating_win = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
+      $red_player_2_performance_rating_win = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
+      // Lose.
+      $red_player_1_performance_rating_lose = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
+      $red_player_2_performance_rating_lose = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
     } else {
-
-      if ($red_player_1['score'] > $red_player_2['score']) {
-        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
-        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
-      } else {
-        $red_player_1_performance_rating = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
-        $red_player_2_performance_rating = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
-      }
-
-      if ($blue_player_1['score'] > $blue_player_2['score']) {
-        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
-        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
-      } else {
-        $blue_player_1_performance_rating = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
-        $blue_player_2_performance_rating = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
-      }
-
+      // Win.
+      $red_player_1_performance_rating_win = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
+      $red_player_2_performance_rating_win = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
+      // Lose.
+      $red_player_1_performance_rating_lose = self::calculatePerformanceRating($red_player_2['score'], $red_player_1['score']);
+      $red_player_2_performance_rating_lose = self::calculatePerformanceRating($red_player_1['score'], $red_player_2['score']);
+    }
+    // Blue team.
+    if ($blue_player_1['score'] > $blue_player_2['score']) {
+      // Win.
+      $blue_player_1_performance_rating_win = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
+      $blue_player_2_performance_rating_win = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
+      // Lose.
+      $blue_player_1_performance_rating_lose = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
+      $blue_player_2_performance_rating_lose = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
+    } else {
+      // Win.
+      $blue_player_1_performance_rating_win = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
+      $blue_player_2_performance_rating_win = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
+      // Lose.
+      $blue_player_1_performance_rating_lose = self::calculatePerformanceRating($blue_player_1['score'], $blue_player_2['score']);
+      $blue_player_2_performance_rating_lose = self::calculatePerformanceRating($blue_player_2['score'], $blue_player_1['score']);
     }
 
     // Write players performance rating to array.
-    $game_info['red']['player_1']['performance_rating'] = $red_player_1_performance_rating;
-    $game_info['red']['player_2']['performance_rating'] = $red_player_2_performance_rating;
-    $game_info['blue']['player_1']['performance_rating'] = $blue_player_1_performance_rating;
-    $game_info['blue']['player_2']['performance_rating'] = $blue_player_2_performance_rating;
+    // Red team.
+    $game_info['red']['player_1']['performance_rating_win'] = $red_player_1_performance_rating_win;
+    $game_info['red']['player_2']['performance_rating_win'] = $red_player_2_performance_rating_win;
+    $game_info['red']['player_1']['performance_rating_lose'] = $red_player_1_performance_rating_lose;
+    $game_info['red']['player_2']['performance_rating_lose'] = $red_player_2_performance_rating_lose;
+    // Blue team.
+    $game_info['blue']['player_1']['performance_rating_win'] = $blue_player_1_performance_rating_win;
+    $game_info['blue']['player_2']['performance_rating_win'] = $blue_player_2_performance_rating_win;
+    $game_info['blue']['player_1']['performance_rating_lose'] = $blue_player_1_performance_rating_lose;
+    $game_info['blue']['player_2']['performance_rating_lose'] = $blue_player_2_performance_rating_lose;
 
     // Calculate team game scores.
-    $red_score = 24 * ($game_info['red']['win_state'] - $red_team_performance_rating);
-    $blue_score = 24 * ($game_info['blue']['win_state'] - $blue_team_performance_rating);
+    $red_score_win = 24 * (1 - $red_team_performance_rating_win);
+    $red_score_lose = 24 * (0 - $red_team_performance_rating_lose);
+    $blue_score_win = 24 * (1 - $blue_team_performance_rating_win);
+    $blue_score_lose = 24 * (0 - $blue_team_performance_rating_lose);
 
-    // Calculate player game score and new player score.
-    $red_player_1_game_score = round($red_score * $red_player_1_performance_rating);
-    $red_player_1_new_score = $red_player_1['score'] + $red_player_1_game_score;
-    $red_player_2_game_score = round($red_score * $red_player_2_performance_rating);
-    $red_player_2_new_score = $red_player_2['score'] + $red_player_2_game_score;
+    // Calculate player game score.
+    $red_player_1_game_score_win = round($red_score_win * $red_player_1_performance_rating_win);
+    $red_player_2_game_score_win = round($red_score_win * $red_player_2_performance_rating_win);
+    $red_player_1_game_score_lose = round($red_score_lose * $red_player_1_performance_rating_lose);
+    $red_player_2_game_score_lose = round($red_score_lose * $red_player_2_performance_rating_lose);
 
-    $blue_player_1_game_score = round($blue_score * $blue_player_1_performance_rating);
-    $blue_player_1_new_score = $blue_player_1['score'] + $blue_player_1_game_score;
-    $blue_player_2_game_score = round($blue_score * $blue_player_2_performance_rating);
-    $blue_player_2_new_score = $blue_player_2['score'] + $blue_player_2_game_score;
+    $blue_player_1_game_score_win = round($blue_score_win * $blue_player_1_performance_rating_win);
+    $blue_player_2_game_score_win = round($blue_score_win * $blue_player_2_performance_rating_win);
+    $blue_player_1_game_score_lose = round($blue_score_lose * $blue_player_1_performance_rating_lose);
+    $blue_player_2_game_score_lose = round($blue_score_lose * $blue_player_2_performance_rating_lose);
 
     // Write actual team game score in array.
     // Unrounded team game score if found in $red_score and $blue_score.
-    $game_info['red']['game_score'] = intval($red_player_1_game_score + $red_player_2_game_score);
-    $game_info['blue']['game_score'] = intval($blue_player_1_game_score + $blue_player_2_game_score);
+    $game_info['red']['game_score_win'] = intval($red_player_1_game_score_win + $red_player_2_game_score_win);
+    $game_info['red']['game_score_lose'] = intval($red_player_1_game_score_lose + $red_player_2_game_score_lose);
+    $game_info['blue']['game_score_win'] = intval($blue_player_1_game_score_win + $blue_player_2_game_score_win);
+    $game_info['blue']['game_score_lose'] = intval($blue_player_1_game_score_lose + $blue_player_2_game_score_lose);
 
     // Write players game score in array.
-    $game_info['red']['player_1']['game_score'] = intval($red_player_1_game_score);
-    $game_info['red']['player_2']['game_score'] = intval($red_player_2_game_score);
-    $game_info['blue']['player_1']['game_score'] = intval($blue_player_1_game_score);
-    $game_info['blue']['player_2']['game_score'] = intval($blue_player_2_game_score);
-
-    // Write players new score in array.
-    $game_info['red']['player_1']['new_score'] = $red_player_1_new_score;
-    $game_info['red']['player_2']['new_score'] = $red_player_2_new_score;
-    $game_info['blue']['player_1']['new_score'] = $blue_player_1_new_score;
-    $game_info['blue']['player_2']['new_score'] = $blue_player_2_new_score;
+    // Red team.
+    $game_info['red']['player_1']['game_score_win'] = intval($red_player_1_game_score_win);
+    $game_info['red']['player_2']['game_score_win'] = intval($red_player_2_game_score_win);
+    $game_info['red']['player_1']['game_score_lose'] = intval($red_player_1_game_score_lose);
+    $game_info['red']['player_2']['game_score_lose'] = intval($red_player_2_game_score_lose);
+    // Blue team.
+    $game_info['blue']['player_1']['game_score_win'] = intval($blue_player_1_game_score_win);
+    $game_info['blue']['player_2']['game_score_win'] = intval($blue_player_2_game_score_win);
+    $game_info['blue']['player_1']['game_score_lose'] = intval($blue_player_1_game_score_lose);
+    $game_info['blue']['player_2']['game_score_lose'] = intval($blue_player_2_game_score_lose);
 
     // Return array with calculations.
     return $game_info;
