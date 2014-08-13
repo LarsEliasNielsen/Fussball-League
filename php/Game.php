@@ -116,9 +116,9 @@ class Game {
 
     // Calculate team game scores.
     $red_score_win = 24 * (1 - $red_team_performance_rating_win);
-    $red_score_lose = 24 * (0 - $red_team_performance_rating_lose);
+    $red_score_lose = 24 * (0 - $blue_team_performance_rating_lose);
     $blue_score_win = 24 * (1 - $blue_team_performance_rating_win);
-    $blue_score_lose = 24 * (0 - $blue_team_performance_rating_lose);
+    $blue_score_lose = 24 * (0 - $red_team_performance_rating_lose);
 
     // Calculate player game score.
     $red_player_1_game_score_win = round($red_score_win * $red_player_1_performance_rating_win);
