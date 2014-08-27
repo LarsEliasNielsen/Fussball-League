@@ -102,7 +102,8 @@ class Player {
     $player_options = '';
 
     foreach($players_array as $player) {
-      $player_options .= '<option value="' . $player['id'] . '">' . $player['name'] . ' (' . $player['score'] . ')</option>' . "\n";
+      // $player_options .= '<option value="' . $player['id'] . '">' . $player['name'] . ' (' . $player['score'] . ')</option>' . "\n";
+      $player_options .= '<option value="' . $player['id'] . '">' . $player['name'] . '</option>' . "\n";
     }
 
     return $player_options;
