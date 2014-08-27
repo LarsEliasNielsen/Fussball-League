@@ -1,0 +1,27 @@
+/* Fussball Main Stylesheet */
+
+.player-select { height: 100px; }
+#red-player-1-data,
+#red-player-2-data,
+#blue-player-1-data,
+#blue-player-2-data {
+  display: none;
+  height: 100px;
+  border: 1px dashed gray;
+  margin: 0 0 1rem 0;
+}
+.player-image { float: left; }
+
+input[type=radio] { display:none; }
+input[type=radio] + label {
+  display:inline-block;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #e7e7e7;
+  border-color: #ddd;
+}
+input[type=radio]:checked + label { 
+  background-image: none;
+  background-color:#d0d0d0;
+}
