@@ -5,9 +5,6 @@
   $player = new Player;
 
   $players = $player->getPlayers();
-  $player_options = $player->getPlayersAsOptions($players);
-
-  // print_r($players);
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +32,9 @@
         <select id="red-player-1" class="player-select">
           <option value="">Select red player</option>
           <?php
-            echo $player_options;
+            foreach($players as $key => $player) {
+              echo '<option value="' . $player['id'] . '">' . $player['name'] . '</option>' . "\n";
+            }
           ?>
         </select>
         <div id="red-player-1-data">
@@ -50,7 +49,9 @@
         <select id="red-player-2" class="player-select">
           <option value="">Select red player</option>
           <?php
-            echo $player_options;
+            foreach($players as $key => $player) {
+              echo '<option value="' . $player['id'] . '">' . $player['name'] . '</option>' . "\n";
+            }
           ?>
         </select>
         <div id="red-player-2-data">
@@ -69,7 +70,9 @@
         <select id="blue-player-1" class="player-select">
           <option value="">Select blue player</option>
           <?php
-            echo $player_options;
+            foreach($players as $key => $player) {
+              echo '<option value="' . $player['id'] . '">' . $player['name'] . '</option>' . "\n";
+            }
           ?>
         </select>
         <div id="blue-player-1-data">
@@ -84,7 +87,9 @@
         <select id="blue-player-2" class="player-select">
           <option value="">Select blue player</option>
           <?php
-            echo $player_options;
+            foreach($players as $key => $player) {
+              echo '<option value="' . $player['id'] . '">' . $player['name'] . '</option>' . "\n";
+            }
           ?>
         </select>
         <div id="blue-player-2-data">

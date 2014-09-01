@@ -91,25 +91,6 @@ class Player {
 
   }
 
-  /**
-   * Getting players as options (select input).
-   *
-   * @param $players_array - Players as array from getPlayers().
-   * @return $player_options - Player options as string.
-   */
-  public function getPlayersAsOptions($players_array) {
-
-    $player_options = '';
-
-    foreach($players_array as $player) {
-      // $player_options .= '<option value="' . $player['id'] . '">' . $player['name'] . ' (' . $player['score'] . ')</option>' . "\n";
-      $player_options .= '<option value="' . $player['id'] . '">' . $player['name'] . '</option>' . "\n";
-    }
-
-    return $player_options;
-
-  }
-
 }
 
 ?>
