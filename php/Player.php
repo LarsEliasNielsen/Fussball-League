@@ -106,7 +106,7 @@ class Player {
 
           // Create player array.
           $player = array(
-            'id' => $player_id,
+            'player_id' => $player_id,
             'name' => $row['name'],
             'score' => $row['player_score']
           );
