@@ -44,6 +44,38 @@ class Player {
   public function updatePlayer($player_id) {}
 
   /**
+   * Get player by id.
+   *
+   * @param $player_id - Player id from database.
+   */
+  public function getPlayer($player_id) {
+    $player = array();
+    $player_query = "SELECT player_id, name, player_score FROM player WHERE player_id = :playerId";
+
+    try {
+      $core = Core::getInstance();
+      $statement = $core->dbh->prepare($player_query);
+      $statement->bindParam(':playerId', $player_id, PDO::PARAM_INT);
+
+      if ($statement->execute()) {
+        $player_row = $statement->fetch();
+
+        $this_player = array(
+          'player_id' => $player_row['player_id'],
+          'name' => $player_row['name'],
+          'player_score' => $player_row['player_score']
+        );
+
+        $player[$player_id] = $this_player;
+      }
+    } catch (PDOException $pe) {
+      trigger_error('Could not connect to MySQL database: ' . $pe->getMessage() , E_USER_ERROR);
+    }
+
+    return $player;
+  }
+
+  /**
    * Getting players from database as array.
    *
    * @return $players - Players as array.
