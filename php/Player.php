@@ -82,7 +82,7 @@ class Player {
    */
   public function getPlayers() {
 
-    $players = array();
+    $player = array();
     // Query for getting all players.
     $players_query = "SELECT
                         player_id,
@@ -98,7 +98,7 @@ class Player {
       if ($statement->execute()) {
 
         $players_rows = $statement->fetchAll();
-        // blablabla....
+
         foreach($players_rows as $row) {
 
           // Get the player id.
@@ -110,16 +110,13 @@ class Player {
             'name' => $row['name'],
             'score' => $row['player_score']
           );
-
-          // Add player to array of players.
-          $players[$player_id] = $player;
         }
       }
     } catch (PDOException $pe) {
       trigger_error('Could not connect to MySQL database: ' . $pe->getMessage() , E_USER_ERROR);
     }
 
-    return $players;
+    return $player;
 
   }
 
