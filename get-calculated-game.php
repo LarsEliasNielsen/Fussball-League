@@ -33,26 +33,26 @@
       $game_info = array(
         'red' => array(
           'player_1' => array(
-            'id' => $player_rows[0]['player_id'],
+            'player_id' => $player_rows[0]['player_id'],
             'name' => $player_rows[0]['name'],
-            'score' => intval($player_rows[0]['player_score'])
+            'player_score' => intval($player_rows[0]['player_score'])
           ),
           'player_2' => array(
-            'id' => $player_rows[1]['player_id'],
+            'player_id' => $player_rows[1]['player_id'],
             'name' => $player_rows[1]['name'],
-            'score' => intval($player_rows[1]['player_score'])
+            'player_score' => intval($player_rows[1]['player_score'])
           ),
         ),
         'blue' => array(
           'player_1' => array(
-            'id' => $player_rows[2]['player_id'],
+            'player_id' => $player_rows[2]['player_id'],
             'name' => $player_rows[2]['name'],
-            'score' => intval($player_rows[2]['player_score'])
+            'player_score' => intval($player_rows[2]['player_score'])
           ),
           'player_2' => array(
-            'id' => $player_rows[3]['player_id'],
+            'player_id' => $player_rows[3]['player_id'],
             'name' => $player_rows[3]['name'],
-            'score' => intval($player_rows[3]['player_score'])
+            'player_score' => intval($player_rows[3]['player_score'])
           )
         )
       );
