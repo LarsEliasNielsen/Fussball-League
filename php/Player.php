@@ -82,7 +82,7 @@ class Player {
    */
   public function getPlayers() {
 
-    $player = array();
+    $players = array();
     // Query for getting all players.
     $players_query = "SELECT
                         player_id,
@@ -104,8 +104,7 @@ class Player {
           // Get the player id.
           $player_id = intval($row['player_id']);
 
-          // Create player array.
-          $player = array(
+          $players[$player_id] = array(
             'player_id' => $player_id,
             'name' => $row['name'],
             'score' => $row['player_score']
@@ -116,7 +115,7 @@ class Player {
       trigger_error('Could not connect to MySQL database: ' . $pe->getMessage() , E_USER_ERROR);
     }
 
-    return $player;
+    return $players;
 
   }
 
